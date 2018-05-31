@@ -1,0 +1,80 @@
+<script type="text/x-red" data-template-name="textsize">
+  <div class = "form-row" style = "padding-left: 15px;">
+    <label for="node-input-name"><i class = "icon-tag"></i> Name : </label>
+    <input type="text" id="node-input-name" style="width: 200px;"/>
+  </div>
+  <div class = "form-row" style = "padding-left: 15px;">
+    <label for="node-input-val"><i class = "icon-tag"></i> Text Size : </label>
+    <input type="text" id="node-input-val" style = "width: 10%;" placeholder = "1"/>
+  </div>
+  <div class = "form-row" id = "slider" style = "width: 70%;display: block; margin-left: auto;  margin-right: auto;"></div>
+</script>
+
+<script type="text/x-red" data-help-name="textsize">
+  <p>This node allows you to select a text size information on the flow value in a slider. </p>
+  <p>Values are between 1 and 5, witch 1 is small, and 5 is tall</p>
+  <p>The default size in this node is 3.</p>
+  <h2>Advanced</h2>
+  <p>The selected value will be in the <code>msg.<b>textsize</b></code> attribute.</p>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('textsize', {
+    category: "ledmatrix",
+    defaults: {
+      name: {value: ""},
+      val: {value: 3}
+    },
+    color: "#FFF",
+    icon: "textsize.png",
+    inputs:1,
+    outputs:1,
+    label: function() {
+      var caption = this.name||this.property||"text size";
+      return caption + ": " + this.val;
+    },
+    oneditprepare:function(){
+      var value = parseInt(this.val);
+      var minimum = 1;
+      var maximum = 5;
+      // Init slider
+      $("#slider").slider({
+        create: function(event, ui){
+          if(value >= minimum && value <= maximum){
+            $("#slider").slider('value', value);
+          }
+          else{
+            $("#slider").slider('value', minimum);
+          }
+        },
+        min: minimum,
+        max: maximum,
+        slide: function(event, ui){
+          $("#node-input-val").val(ui.value);
+        }
+      });
+
+      // When value changes
+      $("#node-input-val").change(function(){
+        if(this.value >= minimum && this.value <= maximum){
+          value = parseInt(this.value);
+          $("#slider").slider('value', parseInt(this.value));
+        }
+        else{
+          this.value = parseInt(minimum);
+          value = parseInt(minimum);
+          $("#slider").slider('value', value);
+        }
+      })
+      $("#node-input-val").click(function(){
+        $("#node-input-val").trigger("change");
+      });
+      $("#node-input-val").focus(function(){
+        $("#node-input-val").trigger("change");
+      });
+      $("#node-input-val").blur(function(){
+        $("#node-input-val").trigger("change");
+      });
+    }
+  });
+</script>

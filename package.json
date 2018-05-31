@@ -1,0 +1,12 @@
+{
+  "name": "textsize",
+  "version": "1.0.0",
+  "description": "This node sets a textsize attribute (between 1 and 5)",
+  "node-red": {
+    "nodes": {
+      "tsa_textsize": "tsa_textsize.js"
+    }
+  },
+  "author": "fabien.fournier@digitalairways.com",
+  "license": "http://www.wtfpl.net"
+}
