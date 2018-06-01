@@ -1,5 +1,5 @@
 {
-  "name": "textsize",
+  "name": "ttb-node-text-size",
   "version": "1.0.0",
   "description": "This node sets a textsize attribute (between 1 and 5)",
   "node-red": {
